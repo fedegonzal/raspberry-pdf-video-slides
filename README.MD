@@ -4,7 +4,7 @@ PDF pages can't include videos. However, if the PDF is created from Google Slide
 
 This project is a kiosk web app and uses PDF.js and YouTube API. 
 
-Main idea:
+# Main idea:
 
 1. If the page has text and images => show the page.
 2. If the page has text, images, and some video, locate the video position, and its URL and replace the position with the video from YouTube.
@@ -12,9 +12,13 @@ Main idea:
 
 The goal is to use this project with Raspberry Pi devices using some Chromium-based browsers in kiosk mode.
 
-Recommended command line params:
+# Recommended command line params:
 
-chromium-browser --kiosk --disable-gesture-requirement-for-presentation  --disable-infobars --disable-session-crashed-bubble --disable-features=TranslateUI "YOUR-URL"
+    chromium-browser --kiosk --disable-gesture-requirement-for-presentation  --disable-infobars --disable-session-crashed-bubble --disable-features=TranslateUI "YOUR-URL"
 
 Anyway, this should be enough:
 chromium-browser --kiosk "YOUR-URL"
+
+# Super simple demo:
+
+    chromium-browser --kiosk "https://fedegonzal.github.io/raspberry-pdf-video-slides/"
