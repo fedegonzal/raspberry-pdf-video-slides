@@ -96,7 +96,7 @@ function renderPage(num) {
 
                     if (video.videoId) {
                         // console.log( "I found a youtube video here!!" );
-                        createYouTubePlayer();
+                        loadYoutubeVideo();
                     }
 
                 });
@@ -161,7 +161,7 @@ function searchForVideoOnPage(annotations, textContext) {
 
 
 // Create the YouTube player
-function createYouTubePlayer() {
+function loadYoutubeVideo() {
     // https://developers.google.com/youtube/player_parameters
     // https://developers.google.com/youtube/iframe_api_reference
 
@@ -169,41 +169,51 @@ function createYouTubePlayer() {
 
     console.log("youtubePlayer", youtubePlayer, video.videoId);
 
-    if (!youtubePlayer) {
-        youtubePlayer = new YT.Player('youtubePlayerContainer', {
-            //height: '360', // Set the height of the player
-            //width: '640',  // Set the width of the player
-            videoId: video.videoId,
-            //videoId: 'lcarEtdJMvI',
-            playerVars: { 
-                'autoplay': 1,
-                'mute': 1,
-                'controls': 0,
-                'enablejsapi': 1,
-                'fullscreen': 1,
-                'origin': location.host
-            },
-            events: {    
-                'onReady': (event) => {
-                    onPlayerReady(event);
-                },
-    
-                'onStateChange': (event) => {
-                    onPlayerStateChange(event);
-                },
-    
-                'onAutoplayBlocked': (event) => {
-                    // console.log("Autoplay blocked", event);
-                }
-            }
-        });
+    // we are reusing the player
+    if (youtubePlayer) {
+        youtubePlayer.loadVideoById(video.videoId);
+        youtubePlayer.onPlayerStateChange = onPlayerStateChange;
     }
     else {
-        youtubePlayer.loadVideoById(video.videoId);
+        // creates the player if it doesn't exist
+        createYotubePlayer();
     }
 
     console.log(youtubePlayer);
 }
+
+
+
+// Create the YouTube player
+function createYotubePlayer() {
+    youtubePlayer = new YT.Player('youtubePlayerContainer', {
+        //height: '360', // Set the height of the player
+        //width: '640',  // Set the width of the player
+        videoId: video.videoId,
+        //videoId: 'lcarEtdJMvI',
+        playerVars: { 
+            'autoplay': 1,
+            'mute': 1,
+            'controls': 0,
+            'enablejsapi': 1,
+            'fullscreen': 1,
+            'origin': location.host
+        },
+        events: {    
+            'onReady': (event) => {
+                onPlayerReady(event);
+            },
+
+            'onStateChange': (event) => {
+                onPlayerStateChange(event);
+            },
+
+            'onAutoplayBlocked': (event) => {
+                // console.log("Autoplay blocked", event);
+            }
+        }
+    });
+}    
 
 
 
@@ -358,6 +368,9 @@ function finishVideoNextSlide() {
 
 }
 
+window.finishVideoNextSlide = finishVideoNextSlide;
+window.gotoNextSlide = gotoNextSlide;
+window.youtubePlayer = youtubePlayer;
 
 // Load the PDF when the page is ready
 document.addEventListener("DOMContentLoaded", startApp);
