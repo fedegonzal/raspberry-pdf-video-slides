@@ -244,7 +244,7 @@ async function onPlayerStateChange(event) {
     // console.log("Title:", videoData.title);
 
 
-    if (event.data == YT.PlayerState.ENDED) {
+    if (event.data == YT.PlayerState.ENDED && !emergency) {
         finishVideoNextSlide();
     }
 
@@ -328,8 +328,11 @@ function gotoPrevSlide() {
 }
 
 
+let emergency = false;
+
 function emergencyStop() {
     clearInterval(slidesInterval);
+    emergency = true;
 }
 
 
