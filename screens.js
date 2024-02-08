@@ -103,7 +103,7 @@ function renderPage(num) {
 
             });
         } catch (error) {
-            //console.error(error);
+            console.error("page loading error!", error);
         }
 
         page.render({ canvasContext: context, viewport });
@@ -230,8 +230,8 @@ async function onPlayerStateChange(event) {
     }
     */
    
-    console.log("Player's state changed");
-    console.log("State:", event);
+    // console.log("Player's state changed");
+    // console.log("State:", event);
 
     // const theVideo = event.target;
 
@@ -251,7 +251,7 @@ async function onPlayerStateChange(event) {
 
     if (event.data == YT.PlayerState.BUFFERING || event.data == YT.PlayerState.PLAYING) {
 
-        console.log("buffering or playing");
+        // console.log("buffering or playing");
 
         if (video.fullScreen) {
             //pdfContainer.style.visibility = "hidden";
@@ -259,11 +259,11 @@ async function onPlayerStateChange(event) {
             try {
                 await youtubePlayerContainer.requestFullscreen();
 
-                console.log("Requesting fullscreen!!!!");
+                // console.log("Requesting fullscreen!!!!");
             } 
             
             catch (error) {
-                console.log("Fullscreen fallback :)");
+                // console.log("Fullscreen fallback :)");
                 
                 youtubePlayerContainer.style.left = 0;
                 youtubePlayerContainer.style.top = 0;
