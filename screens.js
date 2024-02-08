@@ -328,6 +328,12 @@ function gotoPrevSlide() {
 }
 
 
+function emergencyStop() {
+    clearInterval(slidesInterval);
+}
+
+
+
 function getYouTubeVideoId(url) {
     // Regular expression to match YouTube video ID in various URL formats
     const regex = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
@@ -361,3 +367,12 @@ function finishVideoNextSlide() {
 
 // Load the PDF when the page is ready
 document.addEventListener("DOMContentLoaded", startApp);
+
+
+window.addEventListener("resize", () => {
+    slidesContainer.style.width = window.innerWidth + "px";
+    slidesContainer.style.height = window.innerHeight + "px";
+});
+
+
+window.emergencyStop = emergencyStop;
