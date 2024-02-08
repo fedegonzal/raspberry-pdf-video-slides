@@ -218,7 +218,7 @@ function onPlayerReady(event) {
 
 
 // Function called when the player's state changes
-async function onPlayerStateChange(event, size="fullscreen") {
+async function onPlayerStateChange(event) {
 
     /* 
     From API docs
