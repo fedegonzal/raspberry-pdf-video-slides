@@ -167,19 +167,12 @@ function loadYoutubeVideo() {
 
     clearInterval(slidesInterval);
 
-    console.log("youtubePlayer", youtubePlayer, video.videoId);
+    // console.log("youtubePlayer", youtubePlayer, video.videoId);
 
-    // we are reusing the player
-    if (youtubePlayer) {
-        youtubePlayer.loadVideoById(video.videoId);
-        youtubePlayer.onPlayerStateChange = onPlayerStateChange;
-    }
-    else {
-        // creates the player if it doesn't exist
-        createYotubePlayer();
-    }
+    youtubePlayer.loadVideoById(video.videoId);
+    youtubePlayer.onPlayerStateChange = onPlayerStateChange;
 
-    console.log(youtubePlayer);
+    // console.log(youtubePlayer);
 }
 
 
@@ -187,17 +180,12 @@ function loadYoutubeVideo() {
 // Create the YouTube player
 function createYotubePlayer() {
     youtubePlayer = new YT.Player('youtubePlayerContainer', {
-        //height: '360', // Set the height of the player
-        //width: '640',  // Set the width of the player
-        videoId: video.videoId,
-        //videoId: 'lcarEtdJMvI',
         playerVars: { 
             'autoplay': 1,
             'mute': 1,
             'controls': 0,
-            'enablejsapi': 1,
             'fullscreen': 1,
-            'origin': location.host
+            'rel': 0
         },
         events: {    
             'onReady': (event) => {
@@ -213,7 +201,7 @@ function createYotubePlayer() {
             }
         }
     });
-}    
+}
 
 
 
@@ -266,7 +254,7 @@ async function onPlayerStateChange(event) {
         console.log("buffering or playing");
 
         if (video.fullScreen) {
-            pdfContainer.style.visibility = "hidden";
+            //pdfContainer.style.visibility = "hidden";
 
             try {
                 await youtubePlayerContainer.requestFullscreen();
@@ -297,10 +285,7 @@ async function onPlayerStateChange(event) {
 
     }
     
-    // You can do something when the player is ready, if needed
-    //event.target.playVideo();
-    //event.target.fullscreen();
-}
+} // onPlayerStateChange()
 
             
 
@@ -308,6 +293,10 @@ async function onPlayerStateChange(event) {
 function startApp() {
 
     appStarted = true;
+
+    YT.ready(() => {
+        createYotubePlayer();
+    });
 
     pdfjsLib.getDocument(pdfPath).promise.then((pdfDocument) => {
         // console.log('PDF loaded');
@@ -319,7 +308,8 @@ function startApp() {
     slidesInterval = setInterval(() => {
         gotoNextSlide();
     }, defaultInterval);
-}
+
+} // startApp()
 
 
 
@@ -358,7 +348,7 @@ function finishVideoNextSlide() {
     // player.destroy();
 
     youtubePlayerContainer.style.visibility = "hidden";
-    pdfContainer.style.visibility = "visible";
+    //pdfContainer.style.visibility = "visible";
     
     gotoNextSlide();
 
@@ -368,9 +358,6 @@ function finishVideoNextSlide() {
 
 }
 
-window.finishVideoNextSlide = finishVideoNextSlide;
-window.gotoNextSlide = gotoNextSlide;
-window.youtubePlayer = youtubePlayer;
 
 // Load the PDF when the page is ready
 document.addEventListener("DOMContentLoaded", startApp);
