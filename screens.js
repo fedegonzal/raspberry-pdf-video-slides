@@ -295,7 +295,7 @@ async function onPlayerStateChange(event) {
             
 
 // Function to load the PDF
-function loadPDF() {
+function startApp() {
 
     appStarted = true;
 
@@ -360,11 +360,4 @@ function finishVideoNextSlide() {
 
 
 // Load the PDF when the page is ready
-// document.addEventListener("DOMContentLoaded", loadPDF);
-
-document.addEventListener("keydown", (event) => {
-    if (event.key === 's' && !appStarted) {
-        loadPDF();
-    }
-});
-
+document.addEventListener("DOMContentLoaded", startApp);
