@@ -3,22 +3,57 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PDF Slideshow</title>
+        <title>Screens</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <script src="animate.js"></script>
 
-        <script type="module" src="pdfjs-dist/build/pdf.js"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                font-size: 2rem;
+                text-align: center;
+                color: white;
+                background-color: black;
+            }
 
-        <script src="https://www.youtube.com/iframe_api"></script>
+            h1, p {
+                margin: 1rem;
+            }
 
-        <link rel="stylesheet" href="style.css">
+            h2 {
+                margin-top: 8rem;
+            }
+
+            a {
+                color: white;
+                text-decoration: none;
+            }
+        </style>
+
     </head>
     <body>
-        <div id="slidesContainer" class="animate__animated animate__delay-1s">
-            <div id="youtubePlayerContainer"></div>
-            <div id="pdfContainer"></div>
-        </div>
+        <div class="container animate__animated animate__delay-1s animate__fadeIn">
+            <h1>Screens project (draft)</h1>
 
-        <script type="module" src="screens.js"></script>        
+            <h2>PDF Slideshow</h2>
+            <p> <a onclick="gotoAnimated(event);" href="pdf-slides.html">PDF Slideshow</a> </p>
+    
+            <h2>Local Video Loop</h2>
+            <p> <a onclick="gotoAnimated(event);" href="local-video.html">Local Video Loop</a> </p>    
+        </div>
     </body>
+
+    <script>
+        function gotoAnimated(event) {
+            event.preventDefault();
+
+            animateCSS('.container', 'fadeOut').then((message) => {
+                document.getElementsByClassName('container')[0].style.display = 'none';
+                window.location.href = event.target.href;
+            });
+
+        }
+    </script>
+
 </html>

@@ -3,32 +3,23 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Local Video Loop</title>
+        <title>PDF Slideshow</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
         <script src="animate.js"></script>
 
-        <!--
         <script type="module" src="pdfjs-dist/build/pdf.js"></script>
+
         <script src="https://www.youtube.com/iframe_api"></script>
-        -->
 
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <div id="slidesContainer" class="animate__animated animate__delay-1s">
-            <video id="localVideoContainer" src="local-video.mp4" autoplay muted loop></video>
+            <div id="youtubePlayerContainer"></div>
+            <div id="pdfContainer"></div>
         </div>
 
-        <script>
-let slidesContainer = document.getElementById("slidesContainer");
-slidesContainer.style.width = window.innerWidth + "px";
-slidesContainer.style.height = window.innerHeight + "px";
-
-        </script>
-
-        <!--
-        <script type="module" src="screens.js"></script>
-        -->
+        <script type="module" src="screens.js"></script>        
     </body>
 </html>
