@@ -4,6 +4,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>PDF Slideshow</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
         <script type="module" src="pdfjs-dist/build/pdf.js"></script>
 
         <script src="https://www.youtube.com/iframe_api"></script>
@@ -11,7 +14,7 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div id="slidesContainer">
+        <div id="slidesContainer" class="animate__animated animate__delay-1s">
             <div id="youtubePlayerContainer"></div>
             <div id="pdfContainer"></div>
         </div>

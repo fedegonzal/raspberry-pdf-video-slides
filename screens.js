@@ -49,7 +49,7 @@ let ratio = 1;
 let fullScreen = false;
 
 let slidesInterval;
-const defaultInterval = 5000;
+const defaultInterval = 7000; // milliseconds
 
 // Stores the YouTube player
 let youtubePlayer = false;
@@ -66,6 +66,7 @@ let video = {
 // Function to render a page
 function renderPage(num) {
     pdfDoc.getPage(num).then((page) => {
+        let showVideo = false;
         const canvas = document.createElement("canvas");
         pdfContainer.appendChild(canvas);
 
@@ -96,6 +97,7 @@ function renderPage(num) {
 
                     if (video.videoId) {
                         // console.log( "I found a youtube video here!!" );
+                        showVideo = true;
                         loadYoutubeVideo();
                     }
 
@@ -106,9 +108,48 @@ function renderPage(num) {
             console.error("page loading error!", error);
         }
 
+
+        animateCSS('#slidesContainer', 'fadeIn');
+        //if (showVideo) { loadYoutubeVideo(); }
         page.render({ canvasContext: context, viewport });
+    
     });
 }
+
+
+// Go to the next slide as a loop
+function gotoNextSlide() {
+
+    animateCSS('#slidesContainer', 'fadeOut').then((message) => {
+        console.log("fadeOut end => gotoNextSlide()!");
+
+        youtubePlayerContainer.style.visibility = "hidden";
+
+        pageNum = pageNum < pdfDoc.numPages ? pageNum + 1 : 1;
+        pdfContainer.innerHTML = "";
+        renderPage(pageNum);
+    });
+
+}
+
+
+window.animateCSS = (element, animation, prefix = 'animate__') =>
+  // We create a Promise and return it
+  new Promise((resolve, reject) => {
+    const animationName = `${prefix}${animation}`;
+    const node = document.querySelector(element);
+
+    node.classList.add(`${prefix}animated`, animationName);
+
+    // When the animation ends, we clean the classes and resolve the Promise
+    function handleAnimationEnd(event) {
+      event.stopPropagation();
+      node.classList.remove(`${prefix}animated`, animationName);
+      resolve('Animation ended');
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd, {once: true});
+  });
 
 
 // look into a pdf page for a youtube url video
@@ -313,12 +354,6 @@ function startApp() {
 
 
 
-// Go to the next slide as a loop
-function gotoNextSlide() {
-    pageNum = pageNum < pdfDoc.numPages ? pageNum + 1 : 1;
-    pdfContainer.innerHTML = "";
-    renderPage(pageNum);
-}
 
 
 function gotoPrevSlide() {
@@ -356,7 +391,6 @@ function finishVideoNextSlide() {
     // destroy the video
     // player.destroy();
 
-    youtubePlayerContainer.style.visibility = "hidden";
     //pdfContainer.style.visibility = "visible";
     
     gotoNextSlide();
@@ -379,3 +413,5 @@ window.addEventListener("resize", () => {
 
 
 window.emergencyStop = emergencyStop;
+window.gotoNextSlide = gotoNextSlide;
+window.gotoPrevSlide = gotoPrevSlide;
